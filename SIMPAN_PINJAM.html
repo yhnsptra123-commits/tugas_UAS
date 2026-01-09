@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikasi Simpan Pinjam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #0d6efd;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            background: #084298;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            flex: 1;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background: #052c65;
+        }
+
+        main {
+            padding: 20px;
+            background: white;
+            min-height: 400px;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        h2 {
+            color: #0d6efd;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
+        button {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #084298;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer {
+            background: #0d6efd;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Aplikasi Simpan Pinjam</h1>
+    <p>Nama Mahasiswa: <b>Yohan Saputra</b></p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#" onclick="showPage('beranda')">Beranda</a></li>
+        <li><a href="#" onclick="showPage('transaksi')">Transaksi</a></li>
+        <li><a href="#" onclick="showPage('daftar')">Daftar Transaksi</a></li>
+        <li><a href="#" onclick="showPage('profil')">Profil</a></li>
+        <li><a href="#" onclick="showPage('login')">Login</a></li>
+    </ul>
+</nav>
+
+<main>
+    <!-- BERANDA -->
+    <section id="beranda" class="active">
+        <h2>Beranda</h2>
+        <p>
+            Aplikasi Simpan Pinjam ini digunakan untuk mencatat transaksi
+            simpanan dan pinjaman anggota secara sederhana.
+        </p>
+        <ol>
+            <li>Pilih menu Transaksi</li>
+            <li>Isi data simpan atau pinjam</li>
+            <li>Simpan transaksi</li>
+            <li>Lihat hasil di Daftar Transaksi</li>
+        </ol>
+    </section>
+
+    <!-- TRANSAKSI -->
+    <section id="transaksi">
+        <h2>Form Transaksi</h2>
+
+        <label>Nama Transaksi</label>
+        <input type="text" id="nama">
+
+        <label>Jumlah</label>
+        <input type="number" id="jumlah">
+
+        <label>Kategori</label>
+        <select id="kategori">
+            <option value="">-- Pilih --</option>
+            <option value="Simpan">Simpan</option>
+            <option value="Pinjam">Pinjam</option>
+        </select>
+
+        <button onclick="simpanTransaksi()">Simpan</button>
+    </section>
+
+    <!-- DAFTAR TRANSAKSI -->
+    <section id="daftar">
+        <h2>Daftar Transaksi</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Transaksi</th>
+                    <th>Jumlah</th>
+                    <th>Kategori</th>
+                </tr>
+            </thead>
+            <tbody id="tabelTransaksi">
+            </tbody>
+        </table>
+    </section>
+
+    <!-- PROFIL -->
+    <section id="profil">
+        <h2>Profil Aplikasi</h2>
+        <p>
+            Aplikasi ini dibuat untuk memenuhi Ujian Akhir Semester
+            mata kuliah Pemrograman Web 1.
+        </p>
+        <p>
+            Aplikasi Simpan Pinjam membantu pencatatan transaksi
+            simpanan dan pinjaman secara sederhana berbasis web.
+        </p>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="login">
+        <h2>Login</h2>
+
+        <label>Username</label>
+        <input type="text">
+
+        <label>Password</label>
+        <input type="password">
+
+        <button>Login</button>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 - Yohan Saputra</p>
+</footer>
+
+<script>
+    function showPage(id) {
+        let sections = document.querySelectorAll("section");
+        sections.forEach(section => {
+            section.classList.remove("active");
+        });
+        document.getElementById(id).classList.add("active");
+    }
+
+    function simpanTransaksi() {
+        let nama = document.getElementById("nama").value;
+        let jumlah = document.getElementById("jumlah").value;
+        let kategori = document.getElementById("kategori").value;
+
+        if (nama === "" || jumlah === "" || kategori === "") {
+            alert("Semua data harus diisi!");
+            return;
+        }
+
+        let tabel = document.getElementById("tabelTransaksi");
+        let row = tabel.insertRow();
+
+        row.insertCell(0).innerText = nama;
+        row.insertCell(1).innerText = jumlah;
+        row.insertCell(2).innerText = kategori;
+
+        document.getElementById("nama").value = "";
+        document.getElementById("jumlah").value = "";
+        document.getElementById("kategori").value = "";
+
+        alert("Transaksi berhasil disimpan!");
+        showPage("daftar");
+    }
+</script>
+
+</body>
+</html>
